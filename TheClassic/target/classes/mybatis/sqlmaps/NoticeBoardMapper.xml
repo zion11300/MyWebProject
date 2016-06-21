@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snut.webframework.project.mybatis.sqlmaps.NoticeBoardMapper">
+
+	<insert id="create"> <!-- id는 NoticeBoardDAO 인터페이스와 동일하게 설정해주어서 혼란을 피하는 것이 좋음. -->
+		insert into theclassic.board (title, content, writer, category)
+		values(#{title},#{content}, #{writer}, #{category})
+	</insert>
+
+	<select id="read"
+		resultType="snut.webframework.project.theclassic.board.domain.NoticeBoardVO">
+		select bno, title, content, writer, regdate, viewcnt , category from theclassic.board
+		where bno = #{bno}
+	</select>
+<update id="updateviewcnt"
+	>
+		update theclassic.board set viewcnt =#{viewcnt} where bno = #{bno}
+	</update>
+	<update id="update">
+		update theclassic.board set title =#{title}, content =#{content}
+		where bno = #{bno}
+	</update>
+
+	<delete id="delete">
+		delete from theclassic.board where bno = #{bno}
+	</delete>
+
+	<select id="listAll"
+		resultType="snut.webframework.project.theclassic.board.domain.NoticeBoardVO">
+ <![CDATA[
+ select 
+   bno, title, content, writer, regdate, viewcnt 
+ from 
+   theclassic.board 
+ where bno > 0 and category = #{category}
+ order by bno desc, regdate desc
+ ]]>
+	</select>
+
+	<select id="listPage" resultType="snut.webframework.project.theclassic.board.domain.NoticeBoardVO">
+ <![CDATA[
+ select 
+   bno, title, content, writer, regdate, viewcnt 
+ from 
+   theclassic.board 
+ where bno > 0 and category = #{category}
+ order by bno desc, regdate desc
+ limit #{page}, 10
+ ]]>
+	</select>
+
+	<select id="listCriteria"
+		resultType="snut.webframework.project.theclassic.board.domain.NoticeBoardVO">
+ <![CDATA[
+ select 
+   bno, title, content, writer, regdate, viewcnt 
+ from 
+   theclassic.board 
+ where bno > 0 and category = #{category}
+ order by bno desc, regdate desc
+ limit #{pageStart}, #{perPageNum}
+ ]]>
+	</select>
+
+
+
+	<select id="countPaging" resultType="int">
+ <![CDATA[
+ select 
+   count(bno) 
+ from 
+   theclassic.board 
+ where 
+   bno > 0 and category = #{category}
+ ]]>
+	</select>
+
+
+<!-- 
+n 검색 조건이 없음
+t 제목으로 검색
+c 내용으로 검색
+w 작성자로 검색
+tc 제목이나 내용으로 검색]
+cw 내용이나 작성자로 검색
+tcw제목이나 내용 혹은 작성자로 검색
+ -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				and title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'c'.toString()">
+				and content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'w'.toString()">
+				and writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				and ( title like CONCAT('%', #{keyword}, '%') OR content like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				and ( content like CONCAT('%', #{keyword}, '%') OR writer like
+				CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				and ( title like CONCAT('%', #{keyword}, '%')
+				OR
+				content like CONCAT('%', #{keyword}, '%')
+				OR
+				writer like CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql>
+
+	<select id="listSearch"
+		resultType="snut.webframework.project.theclassic.board.domain.NoticeBoardVO">
+<![CDATA[  
+  select * 
+  from theclassic.board 
+  where bno > 0 and category = #{category}
+]]>
+
+		<include refid="search"></include>
+  
+<![CDATA[    
+  order by bno desc
+  limit #{pageStart}, #{perPageNum}
+]]>
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+<![CDATA[  
+  select count(bno) 
+  from theclassic.board
+  where bno > 0 and category = #{category}
+]]>
+		<include refid="search"></include>
+
+	</select>
+
+</mapper>

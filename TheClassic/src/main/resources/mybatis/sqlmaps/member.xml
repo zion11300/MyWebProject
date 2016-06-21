@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="snut.webframework.project">
+    <select id="getMemberList" resultType="snut.webframework.project.theclass.controller.Member">
+      SELECT MNO,EMAIL,PWD,MNAME,CRE_DATE,MOD_DATE FROM studydb.members;
+    </select>
+</mapper>
+
+
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snut.webframework.project.mybatis.sqlmaps.LoginMapper">
+
+   <select id = "login"
+      resultType="snut.webframework.project.login.LoginVO">
+      select uid, upw, uname, email1, email2 from theclassic.user 
+      where uid = #{uid}
+      
+   </select>
+   <insert id="join"> id는 NoticeBoardDAO 인터페이스와 동일하게 설정해주어서 혼란을 피하는 것이 좋음.
+      insert into theclassic.user (uid, upw, uname, email1,email2)
+      values(#{uid},#{upw}, #{uname}, #{email1}, #{email2})
+   </insert>
+   
+   
+   
+
+</mapper> -->

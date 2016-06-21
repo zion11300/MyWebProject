@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	<!-- Add 부분 line 4~7 -->
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+	<util:properties id="jdbc" location="classpath:config/jdbc.properties" />
+
+	<import resource="jdbc-config.xml" />
+
+<context:component-scan base-package="snut.webframework.project" />
+<!-- <context:component-scan base-package="snut.webframework.project.theclass.board.persistence" /> -->
+</beans>

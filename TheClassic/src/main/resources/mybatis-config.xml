@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <typeAliases>
+    <package name="snut.webframework.project"/>    
+  </typeAliases> 
+ <!--  이 명령어를 이용하여매번 parameterType이나 resultTpye클래스 이름을 생략한채로 표현 가능 -->
+
+</configuration>
+
